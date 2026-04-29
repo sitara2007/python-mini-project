@@ -1,0 +1,36 @@
+books = {
+    "Python": {"available": True},
+    "Java": {"available": True}
+}
+issued = {
+    "Python": {
+        "student": "Priyanshu",
+        "days": 5
+    }
+}
+def calculate_fine(days_late):
+    fine = 0
+    rate = 10
+
+    for i in range(1, days_late + 1):
+        fine += rate * i
+
+    return fine
+def issue_book(book, student, days):
+    if books[book]["available"]:
+        books[book]["available"] = False
+        issued[book] = {
+            "student": student,
+            "days": days
+        }
+        return "Book Issued"
+    return "Not Available"
+def return_book(book, days_taken):
+    allowed_days = issued[book]["days"]
+
+    if days_taken > allowed_days:
+        late = days_taken - allowed_days
+        fine = calculate_fine(late)
+        return f"Late Return. Fine: {fine}"
+
+    return "Returned Successfully"
